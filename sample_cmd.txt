@@ -1,11 +1,18 @@
 Git Bash 다운로드
 
+gedit 파일명
+
 IMPALA
+impala-shell -f sample.sql
 SELECT * FROM device WHERE name LIKE 'Me%';
+INVALIDATE METADATA;
+LOAD DATA INPATH '/dualcore/sample.txt' INTO TABLE ratings;
+SELECT job_title,COUNT(*) AS num FROM device GROUP BY job_title ORDER BY num DESC LIMIT 3;
 
 HDFS
 hdfs dfs -mkdir /loudacre
 hdfs dfs -put kb /loudacre/
+hdfs dfs -put sample.log /loudacre/
 hdfs dfs -rm -r /loudacre/kb
 hdfs dfs -cat /loudacre/kb/KBDOC-00289.html | head -n 20
 hdfs dfs -get /loudacre/kb /tmp/kb
@@ -16,10 +23,35 @@ yarn application -list -appStates ALL
 yarn application -status app-id
 
 SQOOP
+mysql --user=training --password=training dualcore
+SHOW TABLES; (dualcore database의 tables 조회)
+DESCRIBE 테이블명
+SELECT emp_id, fname FROM employees LIMIT 10;
+
 sqoop import \
 --connect jdbc:mysql://localhost/loudacre \
 --username training --password training \
+--fields-terminated-by '\t' \
+--warehouse-dir /loudacre \
 --table webpage \
+--split-by orer_id \
 --target-dir /loudacre/webpage \
 --as-parquetfile
+--hive-import
+
+PIG
+pig -x local
+data = LOAD 'sample.txt';
+DUMP data;
+first_2_columns = LOAD 'sample.txt' AS (keyword:chararray, campaign:chararray);
+DESCRIBE first_2_columns;
+DESCRIBE data;
+pig -x local first_etl.pig
+pig first_etl.pig
+
+HIVE
+beeline -u jdbc:hive2://elephant:10000/default -n training
+CREATE EXTERNAL TABLE sample (userid INT, movieid STRING, rating TINYINT) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' LOCATION '/user/training/sample';
+set hive.execution.engine;
+set hive.execution.engine=spark;
 
