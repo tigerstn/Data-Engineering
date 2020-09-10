@@ -1,3 +1,5 @@
+Git Bash 다운로드
+
 IMPALA
 SELECT * FROM device WHERE name LIKE 'Me%';
 
