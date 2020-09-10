@@ -1,5 +1,29 @@
 Git Bash 다운로드
 
+https://victorydntmd.tistory.com/72
+git init
+git status : 상태 확인
+git add
+git add . 명령어를 실행해도 됩니다
+--update : 추적하고 있는 파일만 add
+git rm : 제거 관련 명령어
+--cached : add된 파일 제거 ( 해당 파일을 working directory 상태로 되돌림 )
+git commit
+-m : 간단한 커밋 메시지 작성
+--amend : 마지막 커밋 메시지 수정
+git checkout
+-- {file} : working directory에서 작업한 내용을 버림
+git remote
+add : 원격 저장소 등록
+show : 원격 저장소 정보  git remote show <원격 저장소명>
+git push : git push origin master / git push -u { 원격 저장소 별명 } { 로컬 브랜치명 }
+--delete : 원격 저장소 브랜치 삭제
+git clone  git clone { 원격 저장소 URL }
+-b : 특정 브랜치를 clone
+git pull    git pull { 원격 저장소 별명 } { 브랜치명 }
+--rebase : 기본 방식인 merge가 아니라 rebase 방식으로 pull 수행   git pull --rebase { 원격 저장소 별명 } { 브랜치명 }
+git fetch : local repository에서 remote repository의 내용들을 업데이트
+
 gedit 파일명
 
 IMPALA
