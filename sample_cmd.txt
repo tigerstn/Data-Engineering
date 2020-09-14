@@ -79,3 +79,40 @@ CREATE EXTERNAL TABLE sample (userid INT, movieid STRING, rating TINYINT) ROW FO
 set hive.execution.engine;
 set hive.execution.engine=spark;
 
+https://github.com/tigerstn/Data_Engineering.git
+
+ssh -i ~/SKCC.pem hadoop@ec2-13-125-57-204.ap-northeast-2.compute.amazonaws.com
+
+ssh -i SKCC.pem -N -L 8888:ec2-13-125-57-204.ap-northeast-2.compute.amazonaws.com:8888 hadoop@ec2-13-125-57-204.ap-northeast-2.compute.amazonaws.com
+
+ssh -i SKCC.pem -N -L 8890:ec2-13-125-57-204.ap-northeast-2.compute.amazonaws.com:8890 hadoop@ec2-13-125-57-204.ap-northeast-2.compute.amazonaws.com
+
+
+reviewDF = spark.read.json("/user/hadoop/yelp/review/review.json")
+reviewDF.createOrReplaceTempView("review_df")
+reviewDF.write.option("path", "/user/hadoop/yelp/review_spark") \
+.saveAsTable("team5_review")
+
+spark.sql(""" CREATE TABLE myreview AS SELECT * FROM review_df """)
+
+spark.sql("show tables").show(50)
+
+reviewDF.write.option("path", "/user/hadoop/yelp/review_spark") \
+.saveAsTable("myreview")
+
+ALTER TABLE team5_review SET TBLPROPERTIES('EXTERNAL'='TRUE')
+
+
+
+%pyspark
+photosDF = spark.read.json("/user/hadoop/yelp/photos/photos.json")
+photosDF.createOrReplaceTempView("photosDF")
+%sql
+select * from photosDF limit 10
+Zeppline 구동 ssh -i ~/SKCC.pem -N -L 8890:ec2-13-125-57-204.ap-northeast-2.compute.amazonaws.com:8890 hadoop@ec2-13-125-57-204.ap-northeast-2.compute.amazonaws.com
+
+
+제프린
+
+%pyspark
+%sql
